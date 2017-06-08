@@ -1,0 +1,38 @@
+{
+  "name": "strict-env-conf",
+  "version": "0.0.1",
+  "description": "NPM package for easy work with ENV-based configuration",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"No tests yet\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/i-erokhin/strict-env-conf.git"
+  },
+  "keywords": [
+    "env",
+    "environment",
+    "environment variables",
+    "dotenv",
+    "twelve-factor",
+    "process.env",
+    ".env"
+  ],
+  "author": {
+    "name": "Ilya Erokhin",
+    "email": "sniffsla@gmail.com",
+    "url": "https://github.com/i-erokhin"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/i-erokhin/strict-env-conf/issues"
+  },
+  "homepage": "https://github.com/i-erokhin/strict-env-conf#readme",
+  "dependencies": {
+    "liftoff": "^2.3.0"
+  },
+  "devDependencies": {
+    "dotenv": "^4.0.0"
+  }
+}
