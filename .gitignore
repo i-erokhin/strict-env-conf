@@ -1,5 +1,4 @@
 node_modules
-Strictconffile.js
-Strictconffile.json
+conftemplate.js
 .env
 package-lock.json
