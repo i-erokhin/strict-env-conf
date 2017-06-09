@@ -1,6 +1,6 @@
 {
   "name": "strict-env-conf",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "NPM package for easy work with ENV-based configuration",
   "main": "index.js",
   "engines": {

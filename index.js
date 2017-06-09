@@ -97,7 +97,8 @@ function conf(t) {
   const c = {};
 
   for (let scope of Object.keys(t.scopes)) {
-    c[scope] = {};
+    const scopeKey = scope.toLowerCase();
+    c[scopeKey] = {};
     for (let el of t.scopes[scope]) {
       el.required = !el.hasOwnProperty('default');
       el.envVarName = `${t.prefix}${scope}_${el.name}`;
@@ -118,12 +119,12 @@ function conf(t) {
       }
 
       if (process.env.hasOwnProperty(el.envVarName)) {
-        c[scope][el.name.toLowerCase()] = filter(process.env[el.envVarName], t.filters, el.filters);
+        c[scopeKey][el.name.toLowerCase()] = filter(process.env[el.envVarName], t.filters, el.filters);
       } else {
         if (el.required) {
           throw new Error(`Required env variable ${el.envVarName} is not set`);
         } else {
-          c[scope][el.name.toLowerCase()] = filter(el.default, t.filters, el.filters);
+          c[scopeKey][el.name.toLowerCase()] = filter(el.default, t.filters, el.filters);
         }
       }
     }
