@@ -11,6 +11,12 @@ const defaultFilters = {
   'boolean': [booleanFilter]
 };
 
+/**
+ * A template loads once, env can be scanned many times (TODO), without application restart.
+ * This opportunity may be used for on-the-fly configuration update.
+ */
+let template;
+
 function booleanFilter(str) {
   const s = str.trim();
   if (s === '0' || s === 'false') {
@@ -41,11 +47,32 @@ async function lifton(targetFilename, startDir) {
   throw new Error(`File ${TEMPLATE_FILE} not found in ${startDir} and above.`);
 }
 
+/**
+ * First time init - the function is async, because call to filesystem required
+ *
+ * @param startDir
+ * @param templateFilename
+ * @returns {Promise.<*>}
+ */
 async function load(startDir, templateFilename=TEMPLATE_FILE) {
   const confTplFile = await lifton(templateFilename, startDir);
-  const template = require(confTplFile);
+  template = require(confTplFile);
   return conf(template);
 }
+
+/**
+ * On-the-fly configuration update - no async needed, just re-reading env
+ *
+ * todo: template normalization of first load (async), for fast env rescan
+ * todo: move this functionality to conf object
+ */
+function reload() {
+  if (template === undefined) {
+    throw new Error(`Call to reload() without load() is not possible.`);
+  }
+  return conf(template);
+}
+
 
 function filter(val, globalFilters, localFilters) {
   for (let gf of globalFilters) {
@@ -106,3 +133,4 @@ function conf(t) {
 
 exports.lifton = lifton;
 exports.load = load;
+exports.reload = reload;
