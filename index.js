@@ -27,7 +27,8 @@ async function lifton(targetFilename, startDir) {
   while (path.parse(nextDir).root !== nextDir) {
     let filePath = path.resolve(nextDir, targetFilename);
     try {
-      if ((await lstat(filePath)).isFile()) {
+      const inode = await lstat(filePath);
+      if (inode.isFile()) {
         return filePath;
       }
     } catch (e) {
@@ -73,15 +74,20 @@ function conf(t) {
     for (let el of t.scopes[scope]) {
       el.required = !el.hasOwnProperty('default');
       el.envVarName = `${t.prefix}${scope}_${el.name}`;
-      if (!el.hasOwnProperty('type') && !el.required) {
+      if (el.hasOwnProperty('type')) { // && !el.required) {
         el.type = typeof el.type;
+      } else if (!el.required) {
+        el.type = typeof el.default;
       } else {
         el.type = 'string';
       }
-      if (defaultFilters[el.type] && !el.filters) {
-        el.filters = defaultFilters[el.type];
-      } else {
-        el.filters = [];
+
+      if (!el.filters) {
+        if (defaultFilters[el.type]) {
+          el.filters = defaultFilters[el.type];
+        } else {
+          el.filters = [];
+        }
       }
 
       if (process.env.hasOwnProperty(el.envVarName)) {
