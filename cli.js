@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 'use strict';
 
-const sec = require('./index');
 require('dotenv').config();
+const sec = require('./index');
 
-async function main() {
+(async function main() {
   try {
     const conf = await sec.load(process.cwd());
     console.log(conf);
@@ -12,6 +12,4 @@ async function main() {
     console.error(e);
     process.exit(1);
   }
-}
-
-main();
+})();

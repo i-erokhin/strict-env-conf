@@ -1,10 +1,13 @@
 {
   "name": "strict-env-conf",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "NPM package for easy work with ENV-based configuration",
   "main": "index.js",
   "engines": {
-    "node" : ">=8.0.0"
+    "node": ">=8.0.0"
+  },
+  "bin": {
+    "strict-env-conf": "./cli.js"
   },
   "scripts": {
     "test": "echo \"No tests yet\""
@@ -32,7 +35,7 @@
     "url": "https://github.com/i-erokhin/strict-env-conf/issues"
   },
   "homepage": "https://github.com/i-erokhin/strict-env-conf#readme",
-  "devDependencies": {
+  "dependencies": {
     "dotenv": "^4.0.0"
   }
 }
