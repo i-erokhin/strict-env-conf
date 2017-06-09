@@ -118,12 +118,12 @@ function conf(t) {
       }
 
       if (process.env.hasOwnProperty(el.envVarName)) {
-        c[scope][el.name] = filter(process.env[el.envVarName], t.filters, el.filters);
+        c[scope][el.name.toLowerCase()] = filter(process.env[el.envVarName], t.filters, el.filters);
       } else {
         if (el.required) {
           throw new Error(`Required env variable ${el.envVarName} is not set`);
         } else {
-          c[scope][el.name] = filter(el.default, t.filters, el.filters);
+          c[scope][el.name.toLowerCase()] = filter(el.default, t.filters, el.filters);
         }
       }
     }
