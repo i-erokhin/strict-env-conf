@@ -1,21 +1,12 @@
 'use strict';
 
-const TEMPLATE_FILE = 'conftemplate.js';
-
 const path = require('path');
 const util = require('util');
-const lstat = util.promisify(require('fs').lstat);
 
 const defaultFilters = {
   'number': [Number],
   'boolean': [booleanFilter]
 };
-
-/**
- * A template loads once, env can be scanned many times (TODO), without application restart.
- * This opportunity may be used for on-the-fly configuration update.
- */
-let template;
 
 function booleanFilter(str) {
   const s = str.trim();
@@ -27,52 +18,6 @@ function booleanFilter(str) {
     throw new Error(`Bad value for boolean type: ${str}`);
   }
 }
-
-async function lifton(targetFilename, startDir) {
-  let nextDir = startDir;
-  while (path.parse(nextDir).root !== nextDir) {
-    let filePath = path.resolve(nextDir, targetFilename);
-    try {
-      const inode = await lstat(filePath);
-      if (inode.isFile()) {
-        return filePath;
-      }
-    } catch (e) {
-      if (e.code !== 'ENOENT') {
-        throw e;
-      }
-    }
-    nextDir = path.resolve(nextDir, '..');
-  }
-  throw new Error(`File ${TEMPLATE_FILE} not found in ${startDir} and above.`);
-}
-
-/**
- * First time init - the function is async, because call to filesystem required
- *
- * @param startDir
- * @param templateFilename
- * @returns {Promise.<*>}
- */
-async function load(startDir, templateFilename=TEMPLATE_FILE) {
-  const confTplFile = await lifton(templateFilename, startDir);
-  template = require(confTplFile);
-  return conf(template);
-}
-
-/**
- * On-the-fly configuration update - no async needed, just re-reading env
- *
- * todo: template normalization of first load (async), for fast env rescan
- * todo: move this functionality to conf object
- */
-function reload() {
-  if (template === undefined) {
-    throw new Error(`Call to reload() without load() is not possible.`);
-  }
-  return conf(template);
-}
-
 
 function filter(val, globalFilters, localFilters) {
   for (let gf of globalFilters) {
@@ -132,6 +77,4 @@ function conf(t) {
   return c;
 }
 
-exports.lifton = lifton;
-exports.load = load;
-exports.reload = reload;
+module.exports = conf;

@@ -2,14 +2,13 @@
 'use strict';
 
 require('dotenv').config();
-const sec = require('./index');
+const sec = require('.');
 
-(async function main() {
-  try {
-    const conf = await sec.load(process.cwd());
-    console.log(JSON.stringify(conf, null, '  '));
-  } catch (e) {
-    console.error(e);
-    process.exit(1);
-  }
-})();
+if (process.argv.length !== 3) {
+  console.error(`Usage: strict-env-conf <conf_template_file.js>`);
+  process.exit(2);
+}
+
+const template = require(process.argv[2]);
+const conf = sec(template);
+console.log(JSON.stringify(conf, null, '  '));
