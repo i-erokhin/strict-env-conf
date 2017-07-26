@@ -6,11 +6,9 @@
   "engines": {
     "node": ">=8.0.0"
   },
-  "bin": {
-    "strict-env-conf": "./cli.js"
-  },
   "scripts": {
-    "test": "echo \"No tests yet\""
+    "test": "echo \"No tests yet\"",
+    "test-conf": "node src/test/test-conf.js"
   },
   "repository": {
     "type": "git",
@@ -34,8 +32,5 @@
   "bugs": {
     "url": "https://github.com/i-erokhin/strict-env-conf/issues"
   },
-  "homepage": "https://github.com/i-erokhin/strict-env-conf#readme",
-  "dependencies": {
-    "dotenv": "^4.0.0"
-  }
+  "homepage": "https://github.com/i-erokhin/strict-env-conf#readme"
 }
