@@ -2,7 +2,7 @@
   "name": "strict-env-conf",
   "version": "0.4.0",
   "description": "NPM package for easy work with ENV-based configuration",
-  "main": "index.js",
+  "main": "src",
   "engines": {
     "node": ">=8.0.0"
   },
