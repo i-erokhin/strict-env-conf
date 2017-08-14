@@ -41,10 +41,4 @@ const template = {
 };
 
 const testConf = sec(template);
-
-if (!module.parent) {
-  console.log(JSON.stringify(testConf, null, '    '));
-} else {
-  module.exports = testConf;
-}
-
+console.log(JSON.stringify(testConf, null, '    '));

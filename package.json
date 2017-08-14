@@ -4,7 +4,7 @@
   "description": "NPM package for easy work with ENV-based configuration",
   "main": "src",
   "engines": {
-    "node": ">=8.0.0"
+    "node": ">=8.3.0"
   },
   "scripts": {
     "test": "echo \"No tests yet\"",
@@ -15,6 +15,9 @@
     "url": "git+https://github.com/i-erokhin/strict-env-conf.git"
   },
   "keywords": [
+    "conf",
+    "config",
+    "configuration",
     "env",
     "environment",
     "environment variables",
