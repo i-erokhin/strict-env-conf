@@ -114,7 +114,7 @@ Installation
 ------------
 
 ```bash
-npm i git+https://github.com/i-erokhin/strict-env-conf.git
+npm i strict-env-conf
 ```
 
 License
