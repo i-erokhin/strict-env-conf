@@ -1,6 +1,6 @@
 {
   "name": "strict-env-conf",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "NPM package for easy work with ENV-based configuration",
   "main": "src",
   "engines": {
