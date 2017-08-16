@@ -39,8 +39,8 @@ The second idea - parsing string values from environment variables to convenient
 types of properties.  
 
 ```javascript
-const filters = require('strict-env-conf');
-const sec = require('strict-env-conf/src/filters');
+const sec = require('strict-env-conf');
+const filters = require('strict-env-conf/src/filters');
 
 const envVars = {
   SEC_APP_HOST:                   'example.com',
@@ -61,20 +61,20 @@ const template = {
   scopes: {
     APP: [
       {name: "HOST", default: "localhost"},
-      {name: "PORT", default: 3000} // <-- "filters: [Number]" is redundant here, Number is default filter if (typeof default === 'number')
+      {name: "PORT", default: 3000} // "filters: [Number]" is redundant here, Number is default filter if (typeof default === 'number')
     ],
     DB: [
-      {name: "EXTERNAL_AUTH", default: false}, // <-- default filter for boolean types works with "0", "1", "true", "false"
-      {name: "PORT", filters: [Number]},
+      {name: "EXTERNAL_AUTH", default: false}, // default filter for boolean types works with "0", "1", "true", "false"
+      {name: "PORT", filters: [Number]}, // no default value here, just the Number filter - the variable is required 
       {name: "NAME", default: "my-app"}
     ],
     LDAP: [
-      {name: "TEST_USER_LOGIN", default: undefined},
+      {name: "TEST_USER_LOGIN", default: undefined}, // if default === undefined - you must check in your application code what conf object have this property
       {name: "TEST_USER_EMAIL", default: undefined, filters: [filters.maybeNull]},
       {name: "TEST_USER_ID", default: undefined, filters: [Number]},
     ],
     DATA: [
-      {name: "CATEGORIES", default: "2,1,E", filters: [filters.csv2array]},
+      {name: "CATEGORIES", default: "2,1,E", filters: [filters.csv2array]}, // you also can use your own filters. Filter function example: stringValue => 'MY_' + stringValue 
     ],
   }
 };
